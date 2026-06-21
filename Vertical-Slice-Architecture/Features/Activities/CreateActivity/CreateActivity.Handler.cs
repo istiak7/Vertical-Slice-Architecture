@@ -14,21 +14,37 @@ namespace Vertical_Slice_Architecture.Features.Activities.CreateActivity
         }
         public async Task<Result> Handle(CreateActivityCommand request, CancellationToken cancellationToken)
         {
-            var activity = new Activity
+            try
             {
-                Name = request.Title,
-                Description = request.Description
-            };
-            _appDbContext.Activities.Add(activity);
-            await _appDbContext.SaveChangesAsync(cancellationToken);
-            return new Result
+                var activity = new Activity
+                {
+                    Name = request.Title,
+                    Description = request.Description
+                };
+                _appDbContext.Activities.Add(activity);
+                await _appDbContext.SaveChangesAsync(cancellationToken);
+
+                return new Result
+                {
+                    IsSuccess = true,
+                    StatusCode = 201,
+                    Status = "Success",
+                    Message = "Activity created successfully",
+                    Data = activity
+                };
+            }
+            catch (Exception ex)
             {
-                IsSuccess = true,
-                StatusCode = 201,
-                Status = "Success",
-                Message = "Activity created successfully",
-                Data = activity
-            };
+                return new Result
+                {
+                    IsSuccess = false,
+                    StatusCode = 500,
+                    Status = "Error",
+                    Message = $"An error occurred while creating the activity: {ex.Message}",
+                    Data = null
+                };
+            }
+      
         }
     }
 }
