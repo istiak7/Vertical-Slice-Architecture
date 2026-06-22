@@ -1,10 +1,11 @@
 using FluentValidation;
-using MediatR;
+//using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Vertical_Slice_Architecture.Database;
 using Vertical_Slice_Architecture.Middleware;
 using Vertical_Slice_Architecture.Shared;
+using Vertical_Slice_Architecture.Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,15 +24,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 //MediatR Registration
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-
+//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddMediator(typeof(Program).Assembly);
 //FluentValidation Registration
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 //Validation Behavior PipelineRegistration
-builder.Services.AddTransient(
-    typeof(IPipelineBehavior<,>),
-    typeof(ValidationBehavior<,>));
+//builder.Services.AddTransient(
+//    typeof(IPipelineBehavior<,>),
+//    typeof(ValidationBehavior<,>));
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionHandlingMiddleware>();

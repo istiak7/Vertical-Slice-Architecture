@@ -1,7 +1,8 @@
-﻿using MediatR;
+﻿//using MediatR;
 using Vertical_Slice_Architecture.Database;
 using Vertical_Slice_Architecture.Entities;
 using Vertical_Slice_Architecture.Shared;
+using Vertical_Slice_Architecture.Shared.MediatR;
 
 namespace Vertical_Slice_Architecture.Features.Activities.CreateActivity
 {
@@ -12,7 +13,7 @@ namespace Vertical_Slice_Architecture.Features.Activities.CreateActivity
         {
             _appDbContext = appDbContext;
         }
-        public async Task<Result> Handle(CreateActivityCommand request, CancellationToken cancellationToken)
+        public async Task<Result> HandleAsync(CreateActivityCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -44,7 +45,7 @@ namespace Vertical_Slice_Architecture.Features.Activities.CreateActivity
                     Data = null
                 };
             }
-      
+
         }
     }
 }
