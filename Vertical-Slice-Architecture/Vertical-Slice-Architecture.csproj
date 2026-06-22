@@ -16,7 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Entities\Services\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Shared\Services\" />
   </ItemGroup>
 
 </Project>
