@@ -13,19 +13,13 @@ namespace Vertical_Slice_Architecture.Database
         {
 
             base.OnModelCreating(modelBuilder);
-
-            // Configure your entities and relationships here
-            modelBuilder.Entity<Activity>(entity =>
-            {
-               entity.HasKey(e => e.Id);
-               entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
-               entity.Property(e => e.Description).HasMaxLength(500);
-            });
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         }
 
         #region DbSets
 
         public DbSet<Activity> Activities { get; set; }
+        public DbSet<Department> Departments { get; set; }
 
         #endregion
 
