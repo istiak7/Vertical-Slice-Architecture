@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using Vertical_Slice_Architecture.Database;
 using Vertical_Slice_Architecture.Entities;
 
@@ -9,6 +10,21 @@ namespace Vertical_Slice_Architecture.Shared.Repository
         private readonly AppDbContext _context = context;
 
         #region GET
+
+        public async Task<T?> GetAsync(
+            Expression<Func<T, bool>> predicate,
+            bool asNoTracking = false,
+            CancellationToken cancellationToken = default)
+        {
+            IQueryable<T> query = _context.Set<T>();
+
+            if (asNoTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
+            return await query.FirstOrDefaultAsync(predicate, cancellationToken);
+        }
         public async Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             return await _context.Set<T>().FindAsync(new object[] { id }, cancellationToken);
