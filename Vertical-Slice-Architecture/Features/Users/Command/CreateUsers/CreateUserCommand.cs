@@ -1,6 +1,9 @@
-﻿namespace Vertical_Slice_Architecture.Features.Users.Shared.Dtos
+﻿using MediatR;
+using Vertical_Slice_Architecture.Shared;
+
+namespace Vertical_Slice_Architecture.Features.Users.Command.CreateUsers
 {
-    public class UserRegistrationRequestDto
+    public class CreateUserCommand : IRequest<Result>
     {
         public int RoleId { get; set; }
         private string _Password { get; set; } = null!;
@@ -13,3 +16,4 @@
         }
     }
 }
+    

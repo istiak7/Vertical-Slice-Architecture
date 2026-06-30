@@ -24,10 +24,8 @@
 
   <ItemGroup>
     <Folder Include="Entities\Services\" />
-    <Folder Include="Features\Users\CreateUsers\" />
-    <Folder Include="Features\Users\GetUsers\" />
+    <Folder Include="Features\Users\Queries\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Shared\Extensions\DependencyExtensions\" />
     <Folder Include="Shared\Services\" />
   </ItemGroup>
 

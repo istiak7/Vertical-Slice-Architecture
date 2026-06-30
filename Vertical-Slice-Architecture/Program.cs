@@ -3,8 +3,13 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Vertical_Slice_Architecture.Database;
+using Vertical_Slice_Architecture.Entities;
+using Vertical_Slice_Architecture.Features.Users.Login;
+using Vertical_Slice_Architecture.Features.Users.Shared.Services;
 using Vertical_Slice_Architecture.Middleware;
 using Vertical_Slice_Architecture.Shared;
+using Vertical_Slice_Architecture.Shared.Extensions.DependencyExtensions;
+using Vertical_Slice_Architecture.Shared.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +37,17 @@ builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 builder.Services.AddTransient(
     typeof(IPipelineBehavior<,>),
     typeof(ValidationBehavior<,>));
+
+//JWT Settings Registration
+builder.Services.Configure<JwtSettings>(
+    builder.Configuration.GetSection("JwtSettings"));
+var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
+Console.WriteLine($"[DEBUG] SecretKey Loaded: '{jwtSettings.SecretKey}'");
+
+builder.AddJWTAuthentication();
+builder.Services.AddServices();
+builder.Services.AddRepositories();
+
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionHandlingMiddleware>();

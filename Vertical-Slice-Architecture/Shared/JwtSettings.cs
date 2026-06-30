@@ -1,6 +1,6 @@
 ﻿namespace Vertical_Slice_Architecture.Shared
 {
-    public class JwtSettintgs
+    public class JwtSettings
     {
         public string SecretKey { get; set; } = null!;
         public string Issuer { get; set; } = null!;
